@@ -9,22 +9,34 @@ export default function Main() {
     axios.
       get(`${API}/api/products`, { headers: { Authorization: localStorage.getItem("token") } })
       .then(res => {
-        console.log(res);
-        setProduct(res.data)
+        // console.log(res);
+        setProduct(res.data.products)
       })
       .catch(err => console.log(err))
   }, [])
 
   const addToCart = (id) => {
-    console.log(id);
+    // setAddToCard(...addToCard, findItem(id))
+    findItem(id)
+    // console.log(product);
   }
+  const findItem = (id) => {
+    let obj = {};
+    product.forEach(item => {
+      if (item._id === id) obj = item;
+    });
+    setAddToCard(addToCard=>[
+      ...addToCard,obj
+    ])
+    // console.log(obj);
+  }
+
   return (
-    <div className='container'>
+    <div className='container-fluid'>
       <h1>Products</h1>
-      {console.log(product.products)}
       {console.log(addToCard)}
       <div className="row">
-        {product.products ? (product.products.map((item, index) => (
+        {product ? (product.map((item, index) => (
           <div className="col-4 my-2" key={index}>
             <div className="card">
               <div className="card-body">
